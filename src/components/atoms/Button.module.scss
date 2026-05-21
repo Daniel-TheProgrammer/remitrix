@@ -1,0 +1,14 @@
+.button {
+  border: 0;
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: var(--primary-hover);
+}

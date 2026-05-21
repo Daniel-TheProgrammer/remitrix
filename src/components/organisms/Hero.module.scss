@@ -1,0 +1,17 @@
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 72px var(--space-6);
+  display: grid;
+  gap: var(--space-6);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+}
