@@ -11,12 +11,12 @@ export async function POST(request: Request) {
   };
 
   if (!sendAmount || !sendCurrency || !receiveCurrency) {
-    return jsonResponse({ error: 'Missing required fields' }, { status: 400 });
+    return jsonResponse({ error: 'Missing required fields' }, 400);
   }
 
   const rate = getRateForPair(sendCurrency, receiveCurrency);
   if (rate === null) {
-    return jsonResponse({ error: 'Unsupported currency pair' }, { status: 400 });
+    return jsonResponse({ error: 'Unsupported currency pair' }, 400);
   }
 
   const quote = createQuote(sendAmount, sendCurrency, receiveCurrency, rate);
@@ -28,12 +28,12 @@ export async function GET(request: Request) {
   const id = searchParams.get('id');
 
   if (!id) {
-    return jsonResponse({ error: 'Missing quote id' }, { status: 400 });
+    return jsonResponse({ error: 'Missing quote id' }, 400);
   }
 
   const quote = getQuote(id);
   if (!quote) {
-    return jsonResponse({ error: 'Quote not found' }, { status: 404 });
+    return jsonResponse({ error: 'Quote not found' }, 404);
   }
 
   return jsonResponse({ quote, valid: isQuoteValid(quote) });

@@ -11,6 +11,10 @@ A customer-facing cross-border remittance service featuring real-time exchange r
 - **i18n**: `i18next`, `react-i18next`, `i18next-chained-backend`, `i18next-http-backend`, `i18next-localstorage-backend`, `next-i18next`
 - **Metrics**: `prom-client`
 
+### Notable dependency notes
+
+- `encoding` is intentionally included as a compatibility dependency for `i18next-http-backend` when transitive fetch implementations require text encoding support in non-browser/runtime edge cases.
+
 ## Features
 
 ### Live Exchange Rate Dashboard
@@ -58,6 +62,18 @@ src/
 - Uses **App Router** for UI and API route handlers (`src/app/api/*`) to keep one routing model.
 - Avoids mixing `pages/api` with `app` routes to reduce framework-level ambiguity.
 
+### State management strategy
+
+- No global state library is required for this scope; state is intentionally localized by concern.
+- `RateDashboard` polling is isolated in `src/hooks/useRatePolling.ts`.
+- Wizard quote-lock timing is isolated in `src/hooks/useQuoteLockTimer.ts`.
+- Polling and quote-lock state are decoupled, so live dashboard updates cannot mutate or invalidate the locked quote in wizard Step 2.
+
+### Atomic templates rationale
+
+- `templates/` is kept even for a single page to preserve a scalable composition seam when additional route-specific page structures are introduced.
+- This avoids reworking component boundaries as the app grows from one page to multiple remittance surfaces.
+
 ## Getting Started
 
 ```bash
@@ -93,11 +109,34 @@ Then open [http://localhost:3000](http://localhost:3000).
 
 ## Testing
 
+### Running tests
+
+```bash
+npm run test -- --runInBand
+npm run test:watch
+npm run test:coverage
+```
+
 - Unit tests cover mock data and formatting logic.
 - Route handler tests validate `src/app/api/*` behavior.
 - Component integration tests cover critical remittance wizard flows, including:
   - Step transition from quote to receipt
   - Timer expiry and dropoff metric reporting
+
+### Test files
+
+| File | Coverage area |
+|------|---------------|
+| `src/app/api/__tests__/rates.route.test.ts` | Exchange rates route output/shape |
+| `src/app/api/__tests__/quote.route.test.ts` | Quote POST/GET happy path + error cases |
+| `src/app/api/__tests__/remittance-dropoff.route.test.ts` | Dropoff metric recording route |
+| `src/app/api/__tests__/metrics.route.test.ts` | Prometheus metrics response semantics |
+| `src/components/organisms/__tests__/RemittanceWizard.test.tsx` | Wizard flow + timer expiry/dropoff integration |
+| `src/lib/__tests__/mock-rates.test.ts` | Rate generation and pair behavior |
+| `src/lib/__tests__/mock-quotes.test.ts` | Quote creation and validity rules |
+| `src/lib/__tests__/formatting.test.ts` | Locale formatting utilities |
+
+A root-level reviewer index is also provided at `__tests__/README.md`.
 
 ## CI quality gate
 
