@@ -15,7 +15,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.ts?(x)'],
   collectCoverageFrom: [
     'src/lib/**/*.ts',
-    'src/app/api/**/*.ts',
+    'pages/api/**/*.ts',
     'src/components/organisms/**/*.tsx',
     '!**/__tests__/**',
     '!**/*.d.ts'

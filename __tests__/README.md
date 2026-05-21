@@ -4,10 +4,10 @@ This folder is a reviewer-facing index so tests are discoverable from the reposi
 
 ## API route handler tests
 
-- `src/app/api/__tests__/rates.route.test.ts`
-- `src/app/api/__tests__/quote.route.test.ts`
-- `src/app/api/__tests__/remittance-dropoff.route.test.ts`
-- `src/app/api/__tests__/metrics.route.test.ts`
+- `src/tests/pages-api/rates.test.ts`
+- `src/tests/pages-api/quote.test.ts`
+- `src/tests/pages-api/remittance-dropoff.test.ts`
+- `src/tests/pages-api/metrics.test.ts`
 
 ## Component integration tests
 
