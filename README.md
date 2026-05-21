@@ -59,8 +59,8 @@ src/
 
 ### Routing decision
 
-- Uses **App Router** for UI and API route handlers (`src/app/api/*`) to keep one routing model.
-- Avoids mixing `pages/api` with `app` routes to reduce framework-level ambiguity.
+- Uses **App Router** for UI routes (`src/app/*`) and **`pages/api/*`** for API routes in this Next.js `13.1.1` setup.
+- Runtime API stability is prioritized over mixed/duplicate route handler implementations.
 
 ### State management strategy
 
@@ -118,7 +118,7 @@ npm run test:coverage
 ```
 
 - Unit tests cover mock data and formatting logic.
-- Route handler tests validate `src/app/api/*` behavior.
+- API tests validate `pages/api/*` behavior.
 - Component integration tests cover critical remittance wizard flows, including:
   - Step transition from quote to receipt
   - Timer expiry and dropoff metric reporting
@@ -127,10 +127,10 @@ npm run test:coverage
 
 | File | Coverage area |
 |------|---------------|
-| `src/app/api/__tests__/rates.route.test.ts` | Exchange rates route output/shape |
-| `src/app/api/__tests__/quote.route.test.ts` | Quote POST/GET happy path + error cases |
-| `src/app/api/__tests__/remittance-dropoff.route.test.ts` | Dropoff metric recording route |
-| `src/app/api/__tests__/metrics.route.test.ts` | Prometheus metrics response semantics |
+| `src/tests/pages-api/rates.test.ts` | Exchange rates endpoint output/shape |
+| `src/tests/pages-api/quote.test.ts` | Quote POST/GET happy path + error cases |
+| `src/tests/pages-api/remittance-dropoff.test.ts` | Dropoff metric recording endpoint |
+| `src/tests/pages-api/metrics.test.ts` | Prometheus metrics response semantics |
 | `src/components/organisms/__tests__/RemittanceWizard.test.tsx` | Wizard flow + timer expiry/dropoff integration |
 | `src/lib/__tests__/mock-rates.test.ts` | Rate generation and pair behavior |
 | `src/lib/__tests__/mock-quotes.test.ts` | Quote creation and validity rules |
