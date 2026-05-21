@@ -1,0 +1,249 @@
+.wizard {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--space-6);
+}
+
+.title {
+  margin: 0 0 var(--space-4) 0;
+  font-size: 1.5rem;
+}
+
+/* Stepper */
+.stepper {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stepIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.stepIndicator.active {
+  opacity: 1;
+}
+
+.stepIndicator.completed {
+  opacity: 0.7;
+}
+
+.stepNumber {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.active .stepNumber {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+
+.completed .stepNumber {
+  border-color: #22c55e;
+  background: #22c55e;
+  color: #fff;
+}
+
+.stepLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Form */
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.input,
+.select {
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: var(--primary);
+  }
+}
+
+.select {
+  cursor: pointer;
+}
+
+/* Timer */
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.countdown {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+}
+
+/* Quote Details */
+.quoteDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.9rem;
+}
+
+.detailRow.highlight {
+  background: rgba(59, 130, 246, 0.06);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Expired */
+.expiredBanner {
+  text-align: center;
+  padding: var(--space-6);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius);
+
+  p {
+    margin: 0 0 var(--space-4) 0;
+    color: #ef4444;
+    font-weight: 500;
+  }
+}
+
+/* Processing */
+.processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Success */
+.successBanner {
+  text-align: center;
+  padding: var(--space-4);
+
+  h3 {
+    margin: var(--space-2) 0 0 0;
+    font-size: 1.3rem;
+    color: #22c55e;
+  }
+}
+
+.checkmark {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  background: rgba(34, 197, 94, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #22c55e;
+}
+
+/* Receipt */
+.receipt {
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+
+  h4 {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.9rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+}
+
+.errorText {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius);
+  color: #ef4444;
+  font-size: 0.9rem;
+}
