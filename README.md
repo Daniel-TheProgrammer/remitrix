@@ -53,6 +53,11 @@ src/
 └── styles/            Global SCSS
 ```
 
+### Routing decision
+
+- Uses **App Router** for UI and API route handlers (`src/app/api/*`) to keep one routing model.
+- Avoids mixing `pages/api` with `app` routes to reduce framework-level ambiguity.
+
 ## Getting Started
 
 ```bash
@@ -84,3 +89,21 @@ Then open [http://localhost:3000](http://localhost:3000).
 | `npm run start` | Start production server |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript type check |
+| `npm run test -- --runInBand` | Jest test suite |
+
+## Testing
+
+- Unit tests cover mock data and formatting logic.
+- Route handler tests validate `src/app/api/*` behavior.
+- Component integration tests cover critical remittance wizard flows, including:
+  - Step transition from quote to receipt
+  - Timer expiry and dropoff metric reporting
+
+## CI quality gate
+
+GitHub Actions runs this validation pipeline on push and PR:
+
+1. `npm run lint`
+2. `npm run typecheck`
+3. `npm run test -- --runInBand`
+4. `npm run build`
