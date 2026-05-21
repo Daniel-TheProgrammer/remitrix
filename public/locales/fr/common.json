@@ -1,6 +1,43 @@
 {
   "hero": {
-    "title": "Construisez avec confiance avec Remitrix",
-    "subtitle": "Architecture Atomic Design avec i18n, métriques et base frontend évolutive."
+    "title": "Envoyez de l'argent dans le monde entier",
+    "subtitle": "Taux de change en temps réel, frais transparents et transferts internationaux rapides."
+  },
+  "nav": {
+    "dashboard": "Taux de change",
+    "remittance": "Envoyer de l'argent"
+  },
+  "dashboard": {
+    "title": "Taux de change en direct",
+    "subtitle": "Devise de base : USD — Mis à jour toutes les 10 secondes",
+    "pair": "Paire de devises",
+    "rate": "Taux",
+    "lastUpdate": "Dernière mise à jour"
+  },
+  "wizard": {
+    "title": "Envoyer de l'argent",
+    "step1": "Obtenir un devis",
+    "step2": "Confirmer",
+    "step3": "Reçu",
+    "sendAmount": "Vous envoyez",
+    "sendCurrency": "Devise d'envoi",
+    "receiveCurrency": "Devise de réception",
+    "receiveAmount": "Ils reçoivent",
+    "fee": "Frais de transfert",
+    "appliedRate": "Taux de change",
+    "getQuote": "Obtenir un devis",
+    "confirm": "Confirmer et envoyer",
+    "rateLockedFor": "Taux verrouillé pour",
+    "rateExpired": "Le taux a expiré. Veuillez obtenir un nouveau devis.",
+    "backToQuote": "Nouveau devis",
+    "processing": "Traitement de votre transfert...",
+    "success": "Transfert réussi !",
+    "receiptTitle": "Reçu de transaction",
+    "transactionId": "ID de transaction",
+    "sent": "Montant envoyé",
+    "received": "Montant reçu",
+    "date": "Date",
+    "newTransfer": "Nouveau transfert",
+    "selectCurrency": "Sélectionner la devise"
   }
 }

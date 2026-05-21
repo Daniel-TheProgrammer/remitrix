@@ -1,6 +1,43 @@
 {
   "hero": {
-    "title": "Build confidently with Remitrix",
-    "subtitle": "Atomic Design architecture with i18n, metrics, and scalable frontend foundations."
+    "title": "Send Money Worldwide",
+    "subtitle": "Real-time exchange rates, transparent fees, and fast international transfers."
+  },
+  "nav": {
+    "dashboard": "Exchange Rates",
+    "remittance": "Send Money"
+  },
+  "dashboard": {
+    "title": "Live Exchange Rates",
+    "subtitle": "Base currency: USD — Updated every 10 seconds",
+    "pair": "Currency Pair",
+    "rate": "Rate",
+    "lastUpdate": "Last Updated"
+  },
+  "wizard": {
+    "title": "Send Money",
+    "step1": "Get Quote",
+    "step2": "Confirm",
+    "step3": "Receipt",
+    "sendAmount": "You Send",
+    "sendCurrency": "Send Currency",
+    "receiveCurrency": "Receive Currency",
+    "receiveAmount": "They Receive",
+    "fee": "Transfer Fee",
+    "appliedRate": "Exchange Rate",
+    "getQuote": "Get Quote",
+    "confirm": "Confirm & Send",
+    "rateLockedFor": "Rate locked for",
+    "rateExpired": "Rate expired. Please get a new quote.",
+    "backToQuote": "Get New Quote",
+    "processing": "Processing your transfer...",
+    "success": "Transfer Successful!",
+    "receiptTitle": "Transaction Receipt",
+    "transactionId": "Transaction ID",
+    "sent": "Amount Sent",
+    "received": "Amount Received",
+    "date": "Date",
+    "newTransfer": "Start New Transfer",
+    "selectCurrency": "Select currency"
   }
 }
