@@ -1,9 +1,8 @@
-export function jsonResponse(payload: unknown, init?: ResponseInit): Response {
+export function jsonResponse(payload: unknown, status = 200): Response {
   return new Response(JSON.stringify(payload), {
-    ...init,
+    status,
     headers: {
-      'Content-Type': 'application/json',
-      ...(init?.headers ?? {})
+      'Content-Type': 'application/json'
     }
   });
 }

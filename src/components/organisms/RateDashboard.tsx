@@ -1,60 +1,13 @@
 'use client';
 
-import { useEffect, useState, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatRate } from '@/lib/formatting';
+import { useRatePolling } from '@/hooks/useRatePolling';
 import styles from './RateDashboard.module.scss';
-
-interface RateEntry {
-  pair: string;
-  rate: number;
-  previousRate: number;
-  updatedAt: string;
-}
-
-type FlashState = Record<string, 'up' | 'down' | null>;
-
-const POLL_INTERVAL = 10_000;
 
 export function RateDashboard() {
   const { t, i18n } = useTranslation('common');
-  const [rates, setRates] = useState<RateEntry[]>([]);
-  const [flash, setFlash] = useState<FlashState>({});
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const fetchRates = useCallback(async () => {
-    try {
-      const res = await fetch('/api/rates');
-      const data = await res.json();
-      const newRates: RateEntry[] = data.rates;
-
-      const newFlash: FlashState = {};
-      newRates.forEach((entry) => {
-        if (entry.rate > entry.previousRate) {
-          newFlash[entry.pair] = 'up';
-        } else if (entry.rate < entry.previousRate) {
-          newFlash[entry.pair] = 'down';
-        } else {
-          newFlash[entry.pair] = null;
-        }
-      });
-
-      setRates(newRates);
-      setFlash(newFlash);
-
-      setTimeout(() => setFlash({}), 1500);
-    } catch {
-      // silently ignore fetch errors
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchRates();
-    timerRef.current = setInterval(fetchRates, POLL_INTERVAL);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [fetchRates]);
+  const { rates, flash, error } = useRatePolling();
 
   const locale = i18n.language;
 
@@ -63,6 +16,7 @@ export function RateDashboard() {
       <div className={styles.header}>
         <h2 className={styles.title}>{t('dashboard.title')}</h2>
         <p className={styles.subtitle}>{t('dashboard.subtitle')}</p>
+        {error ? <p className={styles.subtitle}>{error}</p> : null}
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/atoms/Button';
 import { formatCurrency, formatRate, formatDate } from '@/lib/formatting';
+import { useQuoteLockTimer } from '@/hooks/useQuoteLockTimer';
 import styles from './RemittanceWizard.module.scss';
 
 interface Quote {
@@ -31,20 +32,10 @@ export function RemittanceWizard() {
   const [sendCurrency, setSendCurrency] = useState('USD');
   const [receiveCurrency, setReceiveCurrency] = useState('EUR');
   const [quote, setQuote] = useState<Quote | null>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(0);
   const [loading, setLoading] = useState(false);
-  const [expired, setExpired] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const dropoffReported = useRef(false);
-
-  const clearCountdown = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
 
   const reportDropoff = useCallback(async () => {
     if (dropoffReported.current) return;
@@ -56,27 +47,12 @@ export function RemittanceWizard() {
     }
   }, []);
 
-  const startCountdown = useCallback(
-    (expiresAt: number) => {
-      clearCountdown();
-      const update = () => {
-        const remaining = Math.max(0, expiresAt - Date.now());
-        setTimeLeft(remaining);
-        if (remaining <= 0) {
-          clearCountdown();
-          setExpired(true);
-          reportDropoff();
-        }
-      };
-      update();
-      timerRef.current = setInterval(update, 1000);
-    },
-    [clearCountdown, reportDropoff]
-  );
+  const { timeLeft, expired, startTimer, resetTimer, clearTimer } = useQuoteLockTimer(reportDropoff);
 
   useEffect(() => {
-    return () => clearCountdown();
-  }, [clearCountdown]);
+    if (!expired) return;
+    setStep(2);
+  }, [expired]);
 
   useEffect(() => {
     const available = CURRENCIES.filter((c) => c !== sendCurrency);
@@ -108,10 +84,9 @@ export function RemittanceWizard() {
       }
       if (data.quote) {
         setQuote(data.quote);
-        setExpired(false);
         dropoffReported.current = false;
         setStep(2);
-        startCountdown(data.quote.expiresAt);
+        startTimer(data.quote.expiresAt);
       }
     } catch (err) {
       console.error('Quote request failed:', err);
@@ -123,7 +98,7 @@ export function RemittanceWizard() {
 
   const handleConfirm = async () => {
     if (!quote || expired) return;
-    clearCountdown();
+    clearTimer();
     setLoading(true);
     // Simulate processing delay
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -132,11 +107,9 @@ export function RemittanceWizard() {
   };
 
   const handleReset = () => {
-    clearCountdown();
+    resetTimer();
     setStep(1);
     setQuote(null);
-    setExpired(false);
-    setTimeLeft(0);
     dropoffReported.current = false;
   };
 
